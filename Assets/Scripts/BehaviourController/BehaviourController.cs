@@ -14,12 +14,11 @@ public class BehaviourController : MonoBehaviour {
 	
 	void Start () 
 	{
-        velocity = new Vector2(0, 0);
     }
 
 	void Update () 
 	{
-        SetPossibleVelocity(new Vector2(0.1f,0));
+        SetPossibleVelocity(new Vector2(98f, 0));
         TryCorrectVelocity();        
         ApplyVelocityToPosition();
         ApplySpriteDirection();
@@ -42,7 +41,7 @@ public class BehaviourController : MonoBehaviour {
     }
 
     public void ApplySpriteDirection()
-    {
+    {        
         if (velocity.x > 0)
             obj_sprite.transform.localScale = new Vector2(-1, 1);
         if (velocity.x < 0)

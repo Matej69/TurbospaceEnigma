@@ -12,7 +12,6 @@ public class Player : Entity
 
     void Awake()
 	{
-        Debug.Log("PLAYER awake called");
         base.Awake();
         collisionController = GetComponent<CollisionController>();
     }

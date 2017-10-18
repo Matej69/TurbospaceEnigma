@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Entites\Enemy.cs" />
     <Compile Include="Assets\Scripts\Entites\Entity.cs" />
     <Compile Include="Assets\Scripts\Entites\Player.cs" />
+    <Compile Include="Assets\Scripts\Global\Global.cs" />
     <Compile Include="Assets\Scripts\Timer\Timer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

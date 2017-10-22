@@ -5,7 +5,12 @@ using System.Collections;
 public class BehaviourController : MonoBehaviour {
 
     Vector2 velocity;
+    float curGravitationalForce = 0.1f;
     GameObject obj_sprite;
+    public float walkSpeed;
+    public float runSpeed;
+    public float gravity;
+    public float jumpForce;
 
     void Awake()
 	{
@@ -17,21 +22,34 @@ public class BehaviourController : MonoBehaviour {
         SetPossibleVelocity(new Vector2(1f, 0));
     }
 
-	void Update () 
+	void FixedUpdate () 
 	{
-        if (Input.GetKeyDown(KeyCode.W))
-            SetPossibleVelocity(new Vector2(velocity.x, velocity.y + 60));
+        //On ground touched
+        if (GetComponent<PhysicsCollisionController>().IsGrounded())
+        {
+            velocity.y = 0;
+            curGravitationalForce = 0;
+        }
+        
+
+        
+        if (Input.GetKey(KeyCode.W) && GetComponent<PhysicsCollisionController>().IsGrounded())
+            SetPossibleVelocity(new Vector2(velocity.x, velocity.y + jumpForce));
+
+        float xSpeed = (Input.GetKey(KeyCode.LeftShift)) ? runSpeed : walkSpeed;
         if (Input.GetKey(KeyCode.A))
-            SetPossibleVelocity(new Vector2(velocity.x - 3, velocity.y));
+            SetPossibleVelocity(new Vector2(velocity.x - xSpeed, velocity.y));
         else if (Input.GetKey(KeyCode.D))
-            SetPossibleVelocity(new Vector2(velocity.x + 3, velocity.y));
+            SetPossibleVelocity(new Vector2(velocity.x + xSpeed, velocity.y));
         else 
             SetPossibleVelocity(new Vector2(0, velocity.y));
-
-
+        
+        
+                
+        ApplyGravity();
         ApplyDeltaTime();
-        Global.ApplyGravity(ref velocity);        
-        TryCorrectVelocity();        
+        ApplyLimitsToVelocity();
+        CastRaysAndMaybeAlterkVelocity();             
         ApplyVelocityToPosition();
         ApplySpriteDirection();
     }
@@ -43,15 +61,25 @@ public class BehaviourController : MonoBehaviour {
     }
     public void ApplyDeltaTime()
     {
-        velocity *= Time.deltaTime;
+        velocity.x *= Time.fixedDeltaTime;
     }
-    public void TryCorrectVelocity()
+    public void ApplyGravity()
+    {  
+        curGravitationalForce += gravity * Time.fixedDeltaTime;
+        velocity.y -= curGravitationalForce;        
+    }
+    public void CastRaysAndMaybeAlterkVelocity()
     {        
         //Call collision if needed
-        GetComponent<PhysicsCollisionController>().AlterPosition(ref velocity);
+        GetComponent<PhysicsCollisionController>().CastRays(ref velocity);
+    }
+    public void ApplyLimitsToVelocity()
+    {
+        velocity.x = (Mathf.Abs(velocity.x) > 15 * Time.fixedDeltaTime) ? Mathf.Sign(velocity.x) * 15 * Time.fixedDeltaTime : velocity.x;
+        velocity.y = (Mathf.Abs(velocity.y) > 10 * Time.fixedDeltaTime) ? Mathf.Sign(velocity.y) * 10f * Time.fixedDeltaTime : velocity.y;
     }
     public void ApplyVelocityToPosition()
-    {
+    { 
         transform.Translate(velocity.x, velocity.y, 0);
     }
 

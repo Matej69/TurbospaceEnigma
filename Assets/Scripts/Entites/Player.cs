@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-[RequireComponent(typeof(BehaviourController))]
+[RequireComponent(typeof(PlayerBehaviourController))]
 [RequireComponent(typeof(PhysicsCollisionController))]
 public class Player : Entity
 {

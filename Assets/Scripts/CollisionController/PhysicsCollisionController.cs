@@ -15,7 +15,7 @@ public class PhysicsCollisionController : CollisionController {
 
 	void Awake()
 	{
-        spriteRenderer = transform.FindChild("Sprite").GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<Entity>().obj_sprite.GetComponent<SpriteRenderer>();
         controller = GetComponent<BehaviourController>();
     }
 	
@@ -29,9 +29,9 @@ public class PhysicsCollisionController : CollisionController {
 
 
     public void CastRays(ref Vector2 velocity)
-    {
+    {        
         CastVerticalRay(ref velocity);
-        CastHorizontalRay(ref velocity);
+        CastHorizontalRay(ref velocity);        
     }
 
 
@@ -52,7 +52,7 @@ public class PhysicsCollisionController : CollisionController {
         for (int i = 0; i <= rayCount; ++i)
         {            
             Vector2 rayPos = new Vector2(startPos.x, startPos.y + rayDist * i);
-            curRayHit = Physics2D.Raycast(rayPos, dir, rayLength);
+            curRayHit = Physics2D.Raycast(rayPos, dir, rayLength); 
             
             if (i == 0)
             {
@@ -60,25 +60,33 @@ public class PhysicsCollisionController : CollisionController {
                 shortestRayDistance = rayLength;
                 //if the shortest ray is hitting edge that is not vertical or nothing(normal x != -1,0-1) :: ray with index 0 is also the bottom ray that is checking against slopes :: we will move it up for the same length that would be inside collider
                 if (curRayHit.normal.x != -1 && curRayHit.normal.x != 0 && curRayHit.normal.x != 1)
-                    velocity.y += Mathf.Abs(velocity.x) - curRayHit.distance;                    
+                {
+                    if (curRayHit.collider != null)
+                    {
+                        float angleInRadians = (90 - Vector2.Angle(curRayHit.normal, velocity)) * (Mathf.PI / 180);
+                        float yDistanceToMove = ( Mathf.Abs(Mathf.Tan(angleInRadians)) * (Mathf.Abs(velocity.x) - curRayHit.distance )) ;
+                        velocity.y = yDistanceToMove;              
+                        isGrounded = true;                        
+                        return;
+                    } 
+                }   
             }
             if (curRayHit.collider != null && curRayHit.distance <= shortestRayDistance)
             {
                 atLeastOneRayHit = true;
-                shortestRayDistance = curRayHit.distance;
-            }
+                shortestRayDistance = curRayHit.distance;               
+            }            
         }
-
+        
         //apply horizontal velocity
         if (atLeastOneRayHit)
         {
             //fix ray length so it's abs value is never less then value of skin(fixing float decimal rounding)
             float fixedRayLength = (float)System.Math.Round(shortestRayDistance, 5);
-            velocity.x = ((fixedRayLength - skin) * dir.x);            
+            Debug.Log(velocity.x);
+            velocity.x = ((fixedRayLength - skin) * dir.x);
         }
-        
-        
-                                     
+
     }
 
 

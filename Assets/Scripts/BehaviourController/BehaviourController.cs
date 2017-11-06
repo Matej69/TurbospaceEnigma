@@ -4,57 +4,69 @@ using System.Collections;
 
 public class BehaviourController : MonoBehaviour {
 
-    Vector2 velocity;
+    
     float curGravitationalForce = 0.1f;
     GameObject obj_sprite;
+    public Vector2 velocity;
     public float walkSpeed;
     public float runSpeed;
     public float gravity;
     public float jumpForce;
 
-    void Awake()
-	{
-        obj_sprite = transform.FindChild("Sprite").gameObject;
+    public void Awake()
+	{        
     }
 	
-	void Start () 
+	public void Start () 
 	{
-        SetPossibleVelocity(new Vector2(1f, 0));
+        obj_sprite = GetComponent<Entity>().obj_sprite;
     }
 
 	void FixedUpdate () 
 	{
-        //On ground touched
+    }
+
+
+
+
+
+
+
+
+
+
+    public virtual void OnGroundTouched()
+    {
         if (GetComponent<PhysicsCollisionController>().IsGrounded())
         {
             velocity.y = 0;
             curGravitationalForce = 0;
         }
-        
-
-        
-        if (Input.GetKey(KeyCode.W) && GetComponent<PhysicsCollisionController>().IsGrounded())
-            SetPossibleVelocity(new Vector2(velocity.x, velocity.y + jumpForce));
-
-        float xSpeed = (Input.GetKey(KeyCode.LeftShift)) ? runSpeed : walkSpeed;
-        if (Input.GetKey(KeyCode.A))
-            SetPossibleVelocity(new Vector2(velocity.x - xSpeed, velocity.y));
-        else if (Input.GetKey(KeyCode.D))
-            SetPossibleVelocity(new Vector2(velocity.x + xSpeed, velocity.y));
-        else 
-            SetPossibleVelocity(new Vector2(0, velocity.y));
-        
-        
-                
+    }
+    public virtual void HandleVelocityStimulus() { }
+    public virtual void HandleReactionAfterStimulus()
+    {
         ApplyGravity();
         ApplyDeltaTime();
         ApplyLimitsToVelocity();
-        CastRaysAndMaybeAlterkVelocity();             
+        CastRaysAndMaybeAlterkVelocity();
         ApplyVelocityToPosition();
         ApplySpriteDirection();
     }
 
-    
+    public virtual void OnDeath()
+    {
+
+    }
+
+
+
+
+
+
+    //**********************
+    //functions that will not be overriden
+    //**********************
     public void SetPossibleVelocity(Vector2 _possibleVel)
     {
         velocity = _possibleVel;        
@@ -91,12 +103,12 @@ public class BehaviourController : MonoBehaviour {
             obj_sprite.transform.localScale = new Vector2(1, 1);
     }
 
+    
 
 
-    public virtual void OnDeath()
-    {
 
-    }
+
+    
 
 
 

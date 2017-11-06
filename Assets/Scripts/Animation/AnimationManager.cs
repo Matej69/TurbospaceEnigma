@@ -25,7 +25,6 @@ public class AnimationManager : MonoBehaviour {
 	{
         SetAnimation("Walk");
         StartCoroutine(HandleAnimationUpdate());
-
     }
 
 	void Update () 

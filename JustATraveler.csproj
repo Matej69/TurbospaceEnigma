@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Animation\AnimationInfo.cs" />
     <Compile Include="Assets\Scripts\Animation\AnimationManager.cs" />
     <Compile Include="Assets\Scripts\BehaviourController\BehaviourController.cs" />
+    <Compile Include="Assets\Scripts\BehaviourController\PlayerBehaviourController.cs" />
     <Compile Include="Assets\Scripts\CollisionController\CollisionController.cs" />
     <Compile Include="Assets\Scripts\CollisionController\PhysicsCollisionController.cs" />
     <Compile Include="Assets\Scripts\Entites\Enemy.cs" />

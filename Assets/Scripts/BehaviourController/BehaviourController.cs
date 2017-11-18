@@ -4,14 +4,16 @@ using System.Collections;
 
 public class BehaviourController : MonoBehaviour {
 
-    
-    float curGravitationalForce = 0.1f;
+    public Vector2 maxVelocity = new Vector2(15, 10);
+    public float curGravitationalForce = 0.1f;
     GameObject obj_sprite;
     public Vector2 velocity;
     public float walkSpeed;
     public float runSpeed;
     public float gravity;
     public float jumpForce;
+    
+
 
     public void Awake()
 	{        
@@ -19,11 +21,12 @@ public class BehaviourController : MonoBehaviour {
 	
 	public void Start () 
 	{
-        obj_sprite = GetComponent<Entity>().obj_sprite;
+        obj_sprite = GetComponent<Entity>().obj_sprite;           
     }
 
-	void FixedUpdate () 
-	{
+    public void FixedUpdate () 
+	{        
+        HandleBehavior();
     }
 
 
@@ -33,31 +36,23 @@ public class BehaviourController : MonoBehaviour {
 
 
 
-
-
-    public virtual void OnGroundTouched()
+    public void HandleBehavior()
     {
-        if (GetComponent<PhysicsCollisionController>().IsGrounded())
-        {
-            velocity.y = 0;
-            curGravitationalForce = 0;
-        }
+        OnGroundTouched();
+        HandleVelocityStimulus();
+        HandleReactionAfterStimulus();
+        HandleAnimation();
     }
+
+    //**********************
+    //functions to be overriden
+    //**********************    
+    public virtual void OnGroundTouched() { }
     public virtual void HandleVelocityStimulus() { }
-    public virtual void HandleReactionAfterStimulus()
-    {
-        ApplyGravity();
-        ApplyDeltaTime();
-        ApplyLimitsToVelocity();
-        CastRaysAndMaybeAlterkVelocity();
-        ApplyVelocityToPosition();
-        ApplySpriteDirection();
-    }
+    public virtual void HandleReactionAfterStimulus() { }
+    public virtual void HandleAnimation() { }
 
-    public virtual void OnDeath()
-    {
-
-    }
+    public virtual void OnDeath() { }
 
 
 
@@ -80,15 +75,17 @@ public class BehaviourController : MonoBehaviour {
         curGravitationalForce += gravity * Time.fixedDeltaTime;
         velocity.y -= curGravitationalForce;        
     }
-    public void CastRaysAndMaybeAlterkVelocity()
+    public PhysicsCollisionController.RayHitSide CastRaysAndMaybeAlterkVelocity()
     {        
-        //Call collision if needed
-        GetComponent<PhysicsCollisionController>().CastRays(ref velocity);
+        //Call collision if needed and return info about collision
+        return GetComponent<PhysicsCollisionController>().CastRays(ref velocity);
     }
     public void ApplyLimitsToVelocity()
     {
-        velocity.x = (Mathf.Abs(velocity.x) > 15 * Time.fixedDeltaTime) ? Mathf.Sign(velocity.x) * 15 * Time.fixedDeltaTime : velocity.x;
-        velocity.y = (Mathf.Abs(velocity.y) > 10 * Time.fixedDeltaTime) ? Mathf.Sign(velocity.y) * 10f * Time.fixedDeltaTime : velocity.y;
+        Vector2 velSign = new Vector2(Mathf.Sign(velocity.x), Mathf.Sign(velocity.y));
+        Vector2 velAbs = new Vector2(Mathf.Abs(velocity.x), Mathf.Abs(velocity.y));   
+        velocity.x = (velAbs.x > maxVelocity.x * Time.fixedDeltaTime) ? velSign.x * maxVelocity.x * Time.fixedDeltaTime : velocity.x;
+        velocity.y = (velAbs.y > maxVelocity.y * Time.fixedDeltaTime) ? velSign.y * maxVelocity.y * Time.fixedDeltaTime : velocity.y;
     }
     public void ApplyVelocityToPosition()
     { 

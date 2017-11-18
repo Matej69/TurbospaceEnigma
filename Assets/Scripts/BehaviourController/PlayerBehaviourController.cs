@@ -12,14 +12,12 @@ public class PlayerBehaviourController : BehaviourController
 	void Start () 
 	{
         base.Start();
-        SetPossibleVelocity(new Vector2(1f, 0));
+        SetPossibleVelocity(new Vector2(0f, 0));
     }
 
 	void FixedUpdate() 
 	{
-        OnGroundTouched();
-        HandleVelocityStimulus();
-        HandleReactionAfterStimulus();
+        base.FixedUpdate();
     }
 
 
@@ -27,7 +25,7 @@ public class PlayerBehaviourController : BehaviourController
 
 
 
-    public void HandleVelocityStimulus()
+    public override void HandleVelocityStimulus()
     {
         if (Input.GetKey(KeyCode.W) && GetComponent<PhysicsCollisionController>().IsGrounded())
             SetPossibleVelocity(new Vector2(velocity.x, velocity.y + jumpForce));
@@ -40,7 +38,7 @@ public class PlayerBehaviourController : BehaviourController
         else
             SetPossibleVelocity(new Vector2(0, velocity.y));
     }
-    public void HandleReactionAfterStimulus()
+    public override void HandleReactionAfterStimulus()
     {
         ApplyGravity();
         ApplyDeltaTime();
@@ -48,6 +46,21 @@ public class PlayerBehaviourController : BehaviourController
         CastRaysAndMaybeAlterkVelocity();
         ApplyVelocityToPosition();
         ApplySpriteDirection();
+    }
+    public override void OnGroundTouched()
+    {
+        if (GetComponent<PhysicsCollisionController>().IsGrounded())
+        {
+            velocity.y = 0;
+            curGravitationalForce = 0;
+        }
+    }
+    public override void HandleAnimation()
+    {
+        if (velocity.x > 0 || velocity.x < 0)
+            GetComponent<Entity>().animationManager.SetAnimation("Walk");
+        else
+            GetComponent<Entity>().animationManager.SetAnimation("Idle");
     }
 
 

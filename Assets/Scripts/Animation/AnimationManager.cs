@@ -13,7 +13,7 @@ public class AnimationManager : MonoBehaviour {
 
     [HideInInspector]
     public SpriteRenderer spriteRenderer;
-    float frameSpeedInSeconds = 0.05f; //20 sprites per seconds
+    //float frameSpeedInSeconds = 0.05f; //20 sprites per seconds
 
 
     void Awake()
@@ -23,30 +23,28 @@ public class AnimationManager : MonoBehaviour {
 	
 	void Start () 
 	{
-        SetAnimation("Walk");
-        StartCoroutine(HandleAnimationUpdate());
     }
 
 	void Update () 
 	{
-        if (Input.GetKeyDown(KeyCode.A))
-            SetAnimation("A");
-        if (Input.GetKeyDown(KeyCode.S))
-            SetAnimation("S");
     }
 
 
 
     
 
-    void SetAnimation(string name)
+    public void SetAnimation(string name)
     {
         if (animations.Count != 0)
         {
             foreach (AnimationInfo animInfo in animations)
                 if (animInfo.nameID == name)
                 {
-                    curAnimationInfo = animInfo;
+                    //if it is already set to this one
+                    if (curAnimationInfo != null && animInfo.nameID == curAnimationInfo.nameID)
+                        return;
+                    //if it is changed to this one 
+                    curAnimationInfo = animInfo;                    
                     break;
                 }
             SetState(E_STATE.PLAY);
@@ -61,7 +59,7 @@ public class AnimationManager : MonoBehaviour {
         state = newState;
     }
 
-    IEnumerator HandleAnimationUpdate()
+    public IEnumerator HandleAnimationUpdate()
     {
         while (true)
         {
@@ -77,7 +75,11 @@ public class AnimationManager : MonoBehaviour {
                 curAnimationInfo.spriteID = (curAnimationInfo.spriteID == curAnimationInfo.sprites.Count - 1) ? 0 : ++curAnimationInfo.spriteID;
                 spriteRenderer.sprite = curAnimationInfo.sprites[curAnimationInfo.spriteID];
             }
-            yield return new WaitForSeconds(frameSpeedInSeconds);
+
+            if (curAnimationInfo == null)
+                yield return null;
+
+           yield return new WaitForSeconds(curAnimationInfo.frameSpeedInSeconds);
         }
     }
 

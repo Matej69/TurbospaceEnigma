@@ -61,7 +61,7 @@ public class PhysicsCollisionController : MonoBehaviour
         for (int i = 0; i <= rayCount; ++i)
         {            
             Vector2 rayPos = new Vector2(startPos.x, startPos.y + rayDist * i);
-            curRayHit = Physics2D.Raycast(rayPos, dir, rayLength); 
+            curRayHit = Physics2D.Raycast(rayPos, dir, rayLength, GlobalInformation.instance.mask_platform); 
             
             if (i == 0)
             {
@@ -120,7 +120,7 @@ public class PhysicsCollisionController : MonoBehaviour
         for (int i = 0; i <= rayCount; ++i)
         {
             Vector2 rayPos = new Vector2(startPos.x + rayDist * i, startPos.y);
-            curRayHit = Physics2D.Raycast(rayPos, dir, rayLength);
+            curRayHit = Physics2D.Raycast(rayPos, dir, rayLength, GlobalInformation.instance.mask_platform);
             //set initial shortest ray distance
             if (i == 0)
                 shortestRayDistance = rayLength;

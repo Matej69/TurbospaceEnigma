@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Assets\Bullet.cs" />
     <Compile Include="Assets\GameProperties.cs" />
+    <Compile Include="Assets\GlobalInformation.cs" />
     <Compile Include="Assets\Scripts\Animation\AnimationInfo.cs" />
     <Compile Include="Assets\Scripts\Animation\AnimationManager.cs" />
     <Compile Include="Assets\Scripts\BehaviourController\BehaviourController.cs" />

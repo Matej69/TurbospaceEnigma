@@ -53,7 +53,6 @@ public class Weapon : MonoBehaviour {
     {
         GameObject bullet = (GameObject)Instantiate(pref_bullet, bulletsSpawnObj.transform.position, Quaternion.identity);
         bullet.GetComponent<Bullet>().SetBulletDirection((int)ownerSpriteObj.transform.localScale.x);
-        Debug.Log((int)ownerSpriteObj.transform.localScale.x);
     }
 
 

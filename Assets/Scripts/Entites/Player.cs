@@ -15,7 +15,7 @@ public class Player : Entity
 	{
         base.Awake();
         collisionController = GetComponent<PhysicsCollisionController>();
-        weapon = transform.FindChild("Sprite").FindChild("Weapon").GetComponent<Weapon>();
+        weapon = obj_sprite.transform.FindChild("Weapon").GetComponent<Weapon>();
     }
 	
 	void Start () 

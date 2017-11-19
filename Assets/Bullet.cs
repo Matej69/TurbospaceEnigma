@@ -30,6 +30,13 @@ public class Bullet : MonoBehaviour {
         velocity.x = (horDirX == 1) ? -Mathf.Abs(velocity.x) : Mathf.Abs(velocity.x);
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if ((GlobalInformation.instance.mask_enemy & 1 << other.gameObject.layer) == (1 << other.gameObject.layer))
+            other.transform.parent.GetComponent<Enemy>().OnBulletHit(0);
+            
+    }
+
 
 
     /*

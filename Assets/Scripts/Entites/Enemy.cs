@@ -5,7 +5,7 @@ using System.Collections;
 [RequireComponent(typeof(BehaviourController))]
 public class Enemy : Entity
 {
-
+    public int health = 1;
     float onHitColorChangeSpeed = 2f;
     Color color_normal = new Color(1, 1, 1, 1);
     Color color_hit = new Color(1, 0, 0, 1);
@@ -54,6 +54,7 @@ public class Enemy : Entity
 
     public void OnBulletHit(int _dmg)
     {
+        health -= _dmg;
         obj_sprite.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
     }
 

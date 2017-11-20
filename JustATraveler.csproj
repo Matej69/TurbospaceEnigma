@@ -69,6 +69,7 @@
     <Compile Include="Assets\Bullet.cs" />
     <Compile Include="Assets\GameProperties.cs" />
     <Compile Include="Assets\GlobalInformation.cs" />
+    <Compile Include="Assets\NormalGun.cs" />
     <Compile Include="Assets\Scripts\Animation\AnimationInfo.cs" />
     <Compile Include="Assets\Scripts\Animation\AnimationManager.cs" />
     <Compile Include="Assets\Scripts\BehaviourController\BehaviourController.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Assets\Scripts\Entites\Player.cs" />
     <Compile Include="Assets\Scripts\Global\Global.cs" />
     <Compile Include="Assets\Scripts\Timer\Timer.cs" />
+    <Compile Include="Assets\Shotgun.cs" />
     <Compile Include="Assets\Weapon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

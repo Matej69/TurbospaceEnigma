@@ -4,8 +4,9 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour {
 
-    Vector2 velocity;
-    public float gravity = 1f;
+    [HideInInspector]
+    public Vector2 velocity;
+    public float gravity = 0f;
 
 
 	void Awake()

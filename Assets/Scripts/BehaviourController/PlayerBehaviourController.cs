@@ -27,13 +27,13 @@ public class PlayerBehaviourController : BehaviourController
 
     public override void HandleVelocityStimulus()
     {
-        if (Input.GetKey(KeyCode.W) && GetComponent<PhysicsCollisionController>().IsGrounded())
+        if (Input.GetKey(KeyCode.UpArrow) && GetComponent<PhysicsCollisionController>().IsGrounded())
             SetPossibleVelocity(new Vector2(velocity.x, velocity.y + jumpForce));
 
         float xSpeed = (Input.GetKey(KeyCode.LeftShift)) ? runSpeed : walkSpeed;
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
             SetPossibleVelocity(new Vector2(-xSpeed, velocity.y));
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.RightArrow))
             SetPossibleVelocity(new Vector2(xSpeed, velocity.y));
         else
             SetPossibleVelocity(new Vector2(0, velocity.y));

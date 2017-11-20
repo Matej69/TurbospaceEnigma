@@ -9,15 +9,15 @@ public class Weapon : MonoBehaviour {
     public E_WEAPON_TYPE weaponType;
     public E_FIRE_TYPE fireType;
 
-    private GameObject ownerSpriteObj;
+    protected GameObject ownerSpriteObj;
     public GameObject pref_bullet;
     public float reloadTime;
 
-    private GameObject bulletsSpawnObj;
-    private Timer timer_automaticShooting;
+    protected GameObject bulletsSpawnObj;
+    protected Timer timer_automaticShooting;
     
 
-    void Awake()
+    public void Awake()
 	{
         ownerSpriteObj = transform.parent.gameObject;
         bulletsSpawnObj = transform.FindChild("BulletSpawnPoint").gameObject;
@@ -29,7 +29,7 @@ public class Weapon : MonoBehaviour {
 	{	
 	}
 
-	void Update () 
+	public void Update () 
 	{
         HandleShoting();
 	}
@@ -38,6 +38,7 @@ public class Weapon : MonoBehaviour {
 
     void HandleShoting()
     {
+        timer_automaticShooting.Tick(Time.deltaTime);
         if (fireType == E_FIRE_TYPE.ON_TOUCH && Input.GetKeyDown(KeyCode.X))
         {
             SpawnBullet();

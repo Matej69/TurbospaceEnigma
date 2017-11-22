@@ -9,16 +9,16 @@ public class Bullet : MonoBehaviour {
     public float gravity = 0f;
 
 
-	void Awake()
+	public void Awake()
 	{
-        SetInitialVelocity();
+
     }
 	
 	void Start () 
 	{	
 	}
 
-	void Update () 
+    public void Update() 
 	{
         HandleBehaviour();
     }
@@ -34,25 +34,22 @@ public class Bullet : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         if ((GlobalInformation.instance.mask_enemy & 1 << other.gameObject.layer) == (1 << other.gameObject.layer))
+        {
             other.transform.parent.GetComponent<Enemy>().OnBulletHit(0);
+            OnEnemyTouch();
+        }
             
     }
 
 
+    
 
-    /*
-    ** ALWAYS FROM LEFT TO RIGHT   
-    */
-    protected virtual void SetInitialVelocity()
+    public virtual void OnEnemyTouch()
     {
-        velocity = Vector2.right * 8;
+        Destroy(gameObject);
     }
 
-    protected virtual void OnEnemyTouch()
-    {
-    }
-
-    protected virtual void HandleBehaviour()
+    public virtual void HandleBehaviour()
     {
         velocity.y -= gravity * Time.deltaTime;
         transform.Translate(velocity * Time.deltaTime);

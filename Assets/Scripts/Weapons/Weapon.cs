@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
-    public enum E_WEAPON_TYPE { GUN, SHOTGUN, MINIGUN }
+    public enum E_WEAPON_TYPE { GUN, SHOTGUN, MINIGUN, GRANADE }
     public enum E_FIRE_TYPE { ON_HOLD, ON_TOUCH }
     public E_WEAPON_TYPE weaponType;
     public E_FIRE_TYPE fireType;

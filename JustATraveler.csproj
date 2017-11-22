@@ -66,23 +66,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Bullet.cs" />
-    <Compile Include="Assets\GameProperties.cs" />
-    <Compile Include="Assets\GlobalInformation.cs" />
-    <Compile Include="Assets\NormalGun.cs" />
+    <Compile Include="Assets\GranadeBullet.cs" />
     <Compile Include="Assets\Scripts\Animation\AnimationInfo.cs" />
     <Compile Include="Assets\Scripts\Animation\AnimationManager.cs" />
     <Compile Include="Assets\Scripts\BehaviourController\BehaviourController.cs" />
     <Compile Include="Assets\Scripts\BehaviourController\PlayerBehaviourController.cs" />
     <Compile Include="Assets\Scripts\BehaviourController\SlimeBehaviourController.cs" />
+    <Compile Include="Assets\Scripts\Bullets\Bullet.cs" />
     <Compile Include="Assets\Scripts\CollisionController\PhysicsCollisionController.cs" />
     <Compile Include="Assets\Scripts\Entites\Enemy.cs" />
     <Compile Include="Assets\Scripts\Entites\Entity.cs" />
     <Compile Include="Assets\Scripts\Entites\Player.cs" />
+    <Compile Include="Assets\Scripts\Explosion\Explosion.cs" />
+    <Compile Include="Assets\Scripts\GameProperties.cs" />
     <Compile Include="Assets\Scripts\Global\Global.cs" />
+    <Compile Include="Assets\Scripts\GlobalInformation.cs" />
     <Compile Include="Assets\Scripts\Timer\Timer.cs" />
-    <Compile Include="Assets\Shotgun.cs" />
-    <Compile Include="Assets\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Weapons\GranadeWeapon.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Minigun.cs" />
+    <Compile Include="Assets\Scripts\Weapons\NormalGun.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Shotgun.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

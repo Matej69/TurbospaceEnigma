@@ -27,7 +27,8 @@ public class PhysicsCollisionController : MonoBehaviour
 	
 	void Start () 
 	{
-        spriteRenderer = GetComponent<Entity>().obj_sprite.GetComponent<SpriteRenderer>();      
+        //spriteRenderer = GetComponent<Entity>().obj_sprite.GetComponent<SpriteRenderer>();
+        spriteRenderer = transform.FindChild("Sprite").GetComponent<SpriteRenderer>();
     }
 
 	void Update () 
@@ -107,7 +108,7 @@ public class PhysicsCollisionController : MonoBehaviour
     {
         if (velocity.y == 0)
             return E_RAY_HIT_SIDE.NONE;
-        Vector2 dir = (velocity.y > 0) ? Vector2.up : Vector2.down;
+        Vector2 dir = (velocity.y > 0) ? Vector2.up : Vector2.down;        
         Vector2 startPos = (dir == Vector2.up) ? new Vector2(spriteRenderer.bounds.min.x + skin, spriteRenderer.bounds.max.y - skin) : new Vector2(spriteRenderer.bounds.min.x + skin, spriteRenderer.bounds.min.y + skin);
         float rayLength = skin + Mathf.Abs(velocity.y);
         float rayDist = (spriteRenderer.bounds.size.x - skin * 2) / rayCount;

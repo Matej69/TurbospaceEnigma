@@ -11,7 +11,6 @@ public class Bullet : MonoBehaviour {
 
 	public void Awake()
 	{
-
     }
 	
 	void Start () 

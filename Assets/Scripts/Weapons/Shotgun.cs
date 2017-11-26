@@ -7,24 +7,9 @@ public class Shotgun : Weapon {
     public int numOfBullets = 5;
 
 
-    void Awake()
-    {
-        base.Awake();
-    }
-
-    void Start()
-    {
-    }
-
-    void Update()
-    {
-        base.Update();
-    }
-
-
-
     public override void SpawnBullet()
     {
+        CameraController.Shake(0.28f, 0.1f, 0.08f);
         for (int i = 0; i < numOfBullets; ++i)
         {
             GameObject bullet = (GameObject)Instantiate(pref_bullet, bulletsSpawnObj.transform.position, Quaternion.identity);

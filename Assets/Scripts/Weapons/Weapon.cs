@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
-    public enum E_WEAPON_TYPE { GUN, SHOTGUN, MINIGUN, GRANADE }
+    public enum E_WEAPON_TYPE { GUN, SHOTGUN, MINIGUN, GRANADE, UZI, SPACEGUN, BFG, GRANADE_LUNCHER }
     public enum E_FIRE_TYPE { ON_HOLD, ON_TOUCH }
     public E_WEAPON_TYPE weaponType;
     public E_FIRE_TYPE fireType;
@@ -39,9 +39,10 @@ public class Weapon : MonoBehaviour {
     void HandleShoting()
     {
         timer_automaticShooting.Tick(Time.deltaTime);
-        if (fireType == E_FIRE_TYPE.ON_TOUCH && Input.GetKeyDown(KeyCode.X))
+        if (fireType == E_FIRE_TYPE.ON_TOUCH && Input.GetKeyDown(KeyCode.X) && timer_automaticShooting.IsFinished())
         {
             SpawnBullet();
+            timer_automaticShooting.Reset();
         }
         else if (fireType == E_FIRE_TYPE.ON_HOLD && timer_automaticShooting.IsFinished() && Input.GetKey(KeyCode.X))
         {

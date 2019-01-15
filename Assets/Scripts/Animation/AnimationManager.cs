@@ -18,7 +18,7 @@ public class AnimationManager : MonoBehaviour {
 
     void Awake()
 	{
-        spriteRenderer = transform.FindChild("Sprite").GetComponent<SpriteRenderer>();
+        spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
     }
 	
 	void Start () 

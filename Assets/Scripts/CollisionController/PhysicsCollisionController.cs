@@ -28,7 +28,7 @@ public class PhysicsCollisionController : MonoBehaviour
 	void Start () 
 	{
         //spriteRenderer = GetComponent<Entity>().obj_sprite.GetComponent<SpriteRenderer>();
-        spriteRenderer = transform.FindChild("Sprite").GetComponent<SpriteRenderer>();
+        spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
     }
 
 	void Update () 

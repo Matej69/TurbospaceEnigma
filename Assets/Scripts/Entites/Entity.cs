@@ -22,7 +22,7 @@ public class Entity : MonoBehaviour {
 	{
         behaviourController = GetComponent<BehaviourController>();
         animationManager = GetComponent<AnimationManager>();  
-        obj_sprite = transform.FindChild("Sprite").gameObject;
+        obj_sprite = transform.Find("Sprite").gameObject;
     }
 	
 	void Start () 

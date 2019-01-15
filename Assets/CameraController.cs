@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour {
 	{
 	}
 
-	void FixedUpdate () 
+	void Update () 
 	{
         HandleCameraPosition();
         HandleShake();
@@ -60,8 +60,8 @@ public class CameraController : MonoBehaviour {
 
     private void HandleCameraPosition()
     {
-        Vector3 newPos = Vector2.Lerp(transform.position, playerObj.transform.position, followPlayerSpeed * Time.fixedDeltaTime);
-        newPos.y = newPos.y + 0.15f;
+        Vector3 newPos = Vector2.Lerp(transform.position, playerObj.transform.position, followPlayerSpeed * Time.deltaTime);
+        //newPos.y = newPos.y + 0.15f;
         newPos.z = -10;
         transform.position = newPos;
     }

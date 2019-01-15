@@ -20,7 +20,7 @@ public class Weapon : MonoBehaviour {
     public void Awake()
 	{
         ownerSpriteObj = transform.parent.gameObject;
-        bulletsSpawnObj = transform.FindChild("BulletSpawnPoint").gameObject;
+        bulletsSpawnObj = transform.Find("BulletSpawnPoint").gameObject;
         timer_automaticShooting = new Timer(reloadTime);
         timer_automaticShooting.currentTime = 0;
     }

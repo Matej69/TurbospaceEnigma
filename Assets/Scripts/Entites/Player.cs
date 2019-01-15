@@ -3,18 +3,18 @@ using System.Collections;
 
 
 
-[RequireComponent(typeof(PhysicsCollisionController))]
+[RequireComponent(typeof(SlopeController))]
 [RequireComponent(typeof(Weapon))]
 public class Player : Entity
 {
 
-    PhysicsCollisionController collisionController;
+    SlopeController collisionController;
     //Weapon weapon;
 
     void Awake()
 	{
         base.Awake();
-        collisionController = GetComponent<PhysicsCollisionController>();
+        //collisionController = GetComponent<PhysicsCollisionController>();
         //weapon = obj_sprite.transform.FindChild("Weapon").GetComponent<Weapon>();
     }
 	

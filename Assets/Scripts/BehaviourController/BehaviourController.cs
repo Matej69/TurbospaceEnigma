@@ -75,11 +75,6 @@ public class BehaviourController : MonoBehaviour {
         curGravitationalForce += gravity * Time.fixedDeltaTime;
         velocity.y -= curGravitationalForce;        
     }
-    public PhysicsCollisionController.RayHitSide CastRaysAndMaybeAlterkVelocity()
-    {        
-        //Call collision if needed and return info about collision
-        return GetComponent<PhysicsCollisionController>().CastRays(ref velocity);
-    }
     public void ApplyLimitsToVelocity()
     {
         Vector2 velSign = new Vector2(Mathf.Sign(velocity.x), Mathf.Sign(velocity.y));

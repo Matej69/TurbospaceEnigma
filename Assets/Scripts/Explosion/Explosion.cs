@@ -20,8 +20,8 @@ public class Explosion : MonoBehaviour {
 
     void Awake()
 	{
-        spriteRend = transform.FindChild("Sprite").GetComponent<SpriteRenderer>();
-        spriteTrans = transform.FindChild("Sprite").transform;
+        spriteRend = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        spriteTrans = transform.Find("Sprite").transform;
     }
 	
 	void Start () 

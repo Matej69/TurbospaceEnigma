@@ -54,6 +54,7 @@ public class Enemy : Entity
 
     public void OnBulletHit(int _dmg)
     {
+        Debug.Log("HOT");
         health -= _dmg;
         obj_sprite.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
     }

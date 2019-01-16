@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(BehaviourController))]
 public class SlopeController : MonoBehaviour {
-
+    
+    BehaviourController behaviourController;
     GameObject spriteObj;
     
     BoxCollider2D col;
@@ -24,12 +26,12 @@ public class SlopeController : MonoBehaviour {
     public float jumpAmount = 5f;
     int horRayNum = 12;
     int vertRayNum = 12;
-    
 
     Vector2 slopeDirVector = Vector2.zero;
 
     void Awake()
     {
+        behaviourController = GetComponent<BehaviourController>();
         col = transform.GetComponent<BoxCollider2D>();
         spriteObj = transform.Find("Sprite").gameObject;
     }
@@ -43,6 +45,7 @@ public class SlopeController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        velocity = behaviourController.velocity;
 
         SetInitialVelocity();
         VerticalVelocityCalculation();
@@ -50,7 +53,9 @@ public class SlopeController : MonoBehaviour {
 
         // Apply final position
         transform.position = new Vector3(transform.position.x + velocity.x, transform.position.y + velocity.y, transform.position.z);
-        
+        // Save current velocity in behaviour controller
+        behaviourController.velocity = velocity;
+        Debug.Log(velocity.x);
     }
     
     void SetInitialVelocity()
@@ -62,12 +67,19 @@ public class SlopeController : MonoBehaviour {
         velocity.y -= gravitation * Time.deltaTime;
 
         // Set initial horizontal movement    
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow)) {
             velocity.x = -walkSpeed * Time.deltaTime;
-        else if (Input.GetKey(KeyCode.RightArrow))
+            behaviourController.xRotation = Vector2.left;
+        }
+        else if (Input.GetKey(KeyCode.RightArrow)) {
             velocity.x = walkSpeed * Time.deltaTime;
+            behaviourController.xRotation = Vector2.right;
+        }
         else
+        {
             velocity.x = 0;
+            behaviourController.xRotation = Vector2.zero;
+        }
 
         // Set initial vertical movement
         if (Input.GetKey(KeyCode.UpArrow) && grounded)

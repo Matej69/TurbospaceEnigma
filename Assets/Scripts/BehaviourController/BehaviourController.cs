@@ -12,7 +12,9 @@ public class BehaviourController : MonoBehaviour {
     public float runSpeed;
     public float gravity;
     public float jumpForce;
-    
+
+    [HideInInspector]
+    public Vector2 xRotation = Vector2.left;
 
 
     public void Awake()
@@ -21,7 +23,7 @@ public class BehaviourController : MonoBehaviour {
 	
 	public void Start () 
 	{
-        obj_sprite = GetComponent<Entity>().obj_sprite;           
+        obj_sprite = GetComponent<Entity>().obj_sprite;
     }
 
     public void FixedUpdate () 
@@ -89,9 +91,9 @@ public class BehaviourController : MonoBehaviour {
 
     public void ApplySpriteDirection()
     {        
-        if (velocity.x > 0)
+        if (xRotation == Vector2.right)
             obj_sprite.transform.localScale = new Vector2(-1, 1);
-        if (velocity.x < 0)
+        if (xRotation == Vector2.left)
             obj_sprite.transform.localScale = new Vector2(1, 1);
     }
 

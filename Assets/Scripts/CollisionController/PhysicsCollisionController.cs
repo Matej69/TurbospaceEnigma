@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
+[RequireComponent(typeof(BehaviourController))]
+[RequireComponent(typeof(Entity))]
 public class PhysicsCollisionController : MonoBehaviour
 {
     public enum E_RAY_HIT_SIDE { LEFT, RIGHT, TOP, BOTTOM, NONE }
@@ -27,8 +28,7 @@ public class PhysicsCollisionController : MonoBehaviour
 	
 	void Start () 
 	{
-        //spriteRenderer = GetComponent<Entity>().obj_sprite.GetComponent<SpriteRenderer>();
-        spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<Entity>().spriteRenderer;
     }
 
 	void Update () 

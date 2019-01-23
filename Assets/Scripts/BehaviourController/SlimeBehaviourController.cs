@@ -18,7 +18,6 @@ public class SlimeBehaviourController : BehaviourController
 	void Update () 
 	{
         base.FixedUpdate();
-        Debug.Log(velocity.x);
     }
     public override void HandleAnimation()
     {
@@ -37,14 +36,14 @@ public class SlimeBehaviourController : BehaviourController
         PhysicsCollisionController.RayHitSide rayHitSide = GetComponent<PhysicsCollisionController>().CastRays(ref velocity);
         if (rayHitSide.hor == PhysicsCollisionController.E_RAY_HIT_SIDE.LEFT) {
             velocity.x = Mathf.Abs(velocity.x);
-            xRotation = Vector2.right;
+            xFacingDir = Vector2.right;
         }
         else if (rayHitSide.hor == PhysicsCollisionController.E_RAY_HIT_SIDE.RIGHT) {
             velocity.x = -Mathf.Abs(velocity.x);
-            xRotation = Vector2.left;
+            xFacingDir = Vector2.left;
         }
         else {
-            xRotation = Vector2.zero;
+            xFacingDir = Vector2.zero;
         }
 
         ApplyVelocityToPosition();

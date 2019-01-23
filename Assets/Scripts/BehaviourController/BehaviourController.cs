@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
+[RequireComponent(typeof(Entity))]
 public class BehaviourController : MonoBehaviour {
 
     public Vector2 maxVelocity = new Vector2(15, 10);
@@ -14,11 +14,11 @@ public class BehaviourController : MonoBehaviour {
     public float jumpForce;
 
     [HideInInspector]
-    public Vector2 xRotation = Vector2.left;
+    public Vector2 xFacingDir = Vector2.left;
 
 
     public void Awake()
-	{        
+	{   
     }
 	
 	public void Start () 
@@ -28,7 +28,7 @@ public class BehaviourController : MonoBehaviour {
 
     public void FixedUpdate () 
 	{        
-        HandleBehavior();
+        HandleBehaviour();
     }
 
 
@@ -38,7 +38,7 @@ public class BehaviourController : MonoBehaviour {
 
 
 
-    public void HandleBehavior()
+    public void HandleBehaviour()
     {
         OnGroundTouched();
         HandleVelocityStimulus();
@@ -53,7 +53,6 @@ public class BehaviourController : MonoBehaviour {
     public virtual void HandleVelocityStimulus() { }
     public virtual void HandleReactionAfterStimulus() { }
     public virtual void HandleAnimation() { }
-
     public virtual void OnDeath() { }
 
 
@@ -91,9 +90,9 @@ public class BehaviourController : MonoBehaviour {
 
     public void ApplySpriteDirection()
     {        
-        if (xRotation == Vector2.right)
+        if (xFacingDir == Vector2.right)
             obj_sprite.transform.localScale = new Vector2(-1, 1);
-        if (xRotation == Vector2.left)
+        if (xFacingDir == Vector2.left)
             obj_sprite.transform.localScale = new Vector2(1, 1);
     }
 

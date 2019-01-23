@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class Bullet : MonoBehaviour {
+public class Bullet : Entity {
 
     [HideInInspector]
     public Vector2 velocity;
@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour {
 
 	public void Awake()
 	{
+        base.Awake();
     }
 	
 	void Start () 

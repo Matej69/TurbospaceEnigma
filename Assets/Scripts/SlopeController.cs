@@ -55,7 +55,6 @@ public class SlopeController : MonoBehaviour {
         transform.position = new Vector3(transform.position.x + velocity.x, transform.position.y + velocity.y, transform.position.z);
         // Save current velocity in behaviour controller
         behaviourController.velocity = velocity;
-        Debug.Log(velocity.x);
     }
     
     void SetInitialVelocity()
@@ -69,16 +68,15 @@ public class SlopeController : MonoBehaviour {
         // Set initial horizontal movement    
         if (Input.GetKey(KeyCode.LeftArrow)) {
             velocity.x = -walkSpeed * Time.deltaTime;
-            behaviourController.xRotation = Vector2.left;
+            behaviourController.xFacingDir = Vector2.left;
         }
         else if (Input.GetKey(KeyCode.RightArrow)) {
             velocity.x = walkSpeed * Time.deltaTime;
-            behaviourController.xRotation = Vector2.right;
+            behaviourController.xFacingDir = Vector2.right;
         }
-        else
-        {
+        else {
             velocity.x = 0;
-            behaviourController.xRotation = Vector2.zero;
+            behaviourController.xFacingDir = Vector2.zero;
         }
 
         // Set initial vertical movement

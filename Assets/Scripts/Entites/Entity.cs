@@ -17,15 +17,18 @@ public class Entity : MonoBehaviour {
     public AnimationManager animationManager;
     [HideInInspector]
     public GameObject obj_sprite;
+    [HideInInspector]
+    public SpriteRenderer spriteRenderer;
 
     public void Awake()
 	{
         behaviourController = GetComponent<BehaviourController>();
         animationManager = GetComponent<AnimationManager>();  
         obj_sprite = transform.Find("Sprite").gameObject;
+        spriteRenderer = obj_sprite.GetComponent<SpriteRenderer>();
     }
-	
-	void Start () 
+
+    void Start () 
 	{	
 	}
 

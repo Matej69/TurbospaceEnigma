@@ -46,6 +46,8 @@ public class Enemy : Entity
         health -= _dmg;
         obj_sprite.GetComponent<SpriteRenderer>().material.SetInt("_HitEffectActive", 1);
         colorHitTimer.Reset();
+        if (health <= 0)
+          GetComponent<BehaviourController>().OnDeath();
     }
 
 

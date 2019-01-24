@@ -63,7 +63,11 @@ public class SlimeBehaviourController : BehaviourController
     {
         SetPossibleVelocity(new Vector2(walkSpeed * Mathf.Sign(velocity.x), 0));
     }
-    
+
+    public override void OnDeath() {
+      Destroy(gameObject);
+    }
+
 
 
 }

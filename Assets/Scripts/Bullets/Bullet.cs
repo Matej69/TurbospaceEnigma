@@ -7,6 +7,7 @@ public class Bullet : Entity {
     [HideInInspector]
     public Vector2 velocity;
     public float gravity = 0f;
+    public int dmg;
 
 
 	public void Awake()
@@ -35,7 +36,7 @@ public class Bullet : Entity {
     {
         if ((GlobalInformation.instance.mask_enemy & 1 << other.gameObject.layer) == (1 << other.gameObject.layer))
         {
-            other.transform.parent.GetComponent<Enemy>().OnBulletHit(0);
+            other.transform.parent.GetComponent<Enemy>().OnBulletHit(dmg);
             OnEnemyTouch();
         }
             

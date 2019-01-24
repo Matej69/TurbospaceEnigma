@@ -14,7 +14,7 @@ public class WeaponSwitching : MonoBehaviour {
     void Start ()
     {
         SetWeapons(new List<Weapon>(GetComponent<Entity>().obj_sprite.GetComponentsInChildren<Weapon>(true)));
-        SetActiveWeapon(Weapon.E_WEAPON_TYPE.GRANADE_LUNCHER);
+        SetActiveWeapon(Weapon.E_WEAPON_TYPE.MINIGUN);
     }
 	
 	// Update is called once per frame
@@ -27,7 +27,7 @@ public class WeaponSwitching : MonoBehaviour {
         this.weapons = weapons;
     }
 
-    bool SetActiveWeapon(Weapon.E_WEAPON_TYPE weaponType)
+    public bool SetActiveWeapon(Weapon.E_WEAPON_TYPE weaponType)
     {
         foreach(Weapon weapon in weapons) {
             if (weaponType == weapon.weaponType) {

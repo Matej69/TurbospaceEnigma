@@ -21,7 +21,7 @@ public class Entity : MonoBehaviour {
     public SpriteRenderer spriteRenderer;
 
     public void Awake()
-	{
+	  {
         behaviourController = GetComponent<BehaviourController>();
         animationManager = GetComponent<AnimationManager>();  
         obj_sprite = transform.Find("Sprite").gameObject;
@@ -34,7 +34,7 @@ public class Entity : MonoBehaviour {
 
 	void Update () 
 	{        
-    }
+  }
 
 
 

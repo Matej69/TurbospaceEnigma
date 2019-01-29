@@ -20,6 +20,7 @@ public class Weapon : MonoBehaviour {
     public GameObject pref_bullet;
     public float reloadTime;
     [Space(10)]
+    public BulletFactory.E_BULLET_TYPE bulletType;
     public int numOfBullets;
     public MinMaxPair xRandVelocity;
     public MinMaxPair yRandVelocity;
@@ -70,10 +71,10 @@ public class Weapon : MonoBehaviour {
     public virtual void SpawnBullet()
     {
       CameraController.Shake(shakeMagnitude, shakeTime, shakeEveryXSec);
-      for(int i = 0; i < numOfBullets; ++i) { 
-        GameObject bullet = (GameObject)Instantiate(pref_bullet, bulletsSpawnObj.transform.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>().velocity = new Vector2(UnityEngine.Random.Range(xRandVelocity.min, xRandVelocity.max), UnityEngine.Random.Range(yRandVelocity.min, yRandVelocity.max));
-        bullet.GetComponent<Bullet>().SetBulletDirection((int)ownerSpriteObj.transform.localScale.x);
+      for(int i = 0; i < numOfBullets; ++i) {
+        Vector2 velocity = new Vector2(UnityEngine.Random.Range(xRandVelocity.min, xRandVelocity.max), UnityEngine.Random.Range(yRandVelocity.min, yRandVelocity.max));
+        int dir = (int)ownerSpriteObj.transform.localScale.x;
+        BulletFactory.Get().Create(bulletType, pref_bullet, bulletsSpawnObj.transform.position, velocity, dir);
       }
   }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameConsole : MonoBehaviour {
@@ -13,17 +14,16 @@ public class GameConsole : MonoBehaviour {
         text_commandHistory = transform.Find("commandHistoryText").GetComponent<Text>();
     }
 
-    void OnEnable() {
-        input_command.ActivateInputField();
-    }
-
     // Update is called once per frame
     void Update () {
 
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
-            RunCommand(input_command.text);
-		
-	}
+      if (!input_command.isFocused)
+        input_command.ActivateInputField();
+
+      if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        RunCommand(input_command.text);
+
+    }
 
 
 
@@ -40,6 +40,9 @@ public class GameConsole : MonoBehaviour {
             PushToCommandHistory("[" + cmd + "] -> Player weapon switched to " + weaponID);
           }
         }
+        // Default message if command was not recognized
+        else
+           PushToCommandHistory("[" + cmd + "] -> Command could not be recognized");
 
 
       }

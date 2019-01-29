@@ -5,20 +5,26 @@ using System.Collections;
 public class SlimeBehaviourController : BehaviourController
 {
 
-	void Awake()
+  PhysicsCollisionController physicsCollisionController;
+
+  void Awake()
 	{
-	}
+    physicsCollisionController = GetComponent<PhysicsCollisionController>();
+    physicsCollisionController.SetSpriteRenderer(transform.Find("Sprite").GetComponent<SpriteRenderer>());
+  }
 	
 	void Start () 
 	{
-        base.Start();
-        SetPossibleVelocity(new Vector2(walkSpeed, 0));
-    }
+    base.Start();
+    SetPossibleVelocity(new Vector2(walkSpeed, 0));
+   }
 
 	void Update () 
 	{
-        base.FixedUpdate();
-    }
+    base.FixedUpdate();
+  }
+
+
     public override void HandleAnimation()
     {
         if (velocity.x > 0 || velocity.x < 0)

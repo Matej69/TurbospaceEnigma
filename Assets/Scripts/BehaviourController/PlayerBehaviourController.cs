@@ -7,6 +7,8 @@ public class PlayerBehaviourController : BehaviourController
 
     void Awake()
     {
+      //Random.InitState(123);
+    
     }
 
     void Start()

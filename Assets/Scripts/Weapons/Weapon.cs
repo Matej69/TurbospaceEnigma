@@ -74,7 +74,7 @@ public class Weapon : MonoBehaviour {
       for(int i = 0; i < numOfBullets; ++i) {
         Vector2 velocity = new Vector2(UnityEngine.Random.Range(xRandVelocity.min, xRandVelocity.max), UnityEngine.Random.Range(yRandVelocity.min, yRandVelocity.max));
         int dir = (int)ownerSpriteObj.transform.localScale.x;
-        BulletFactory.Get().Create(bulletType, pref_bullet, bulletsSpawnObj.transform.position, velocity, dir);
+        BulletFactory.Create(bulletType, pref_bullet, bulletsSpawnObj.transform.position, velocity, dir);
       }
   }
 

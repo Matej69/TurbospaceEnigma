@@ -135,10 +135,4 @@ public class LevelGenerator : MonoBehaviour {
   }
 
 
-  void AddPolygonPoint()
-  {
-
-  }
-
-
 }

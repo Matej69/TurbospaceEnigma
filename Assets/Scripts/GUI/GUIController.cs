@@ -8,22 +8,20 @@ public class GUIController : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-        ref_gameConsole = transform.Find("Console").gameObject;
-    }
+    ref_gameConsole = transform.Find("Console").gameObject;
+  }
 	
 	// Update is called once per frame
 	void Update () {
+    HandleGameConsole();
+  }
 
-      HandleGameConsole();
+  void HandleGameConsole() {
+    if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+      if (ref_gameConsole.activeSelf)
+        ref_gameConsole.gameObject.SetActive(false);
+      else
+        ref_gameConsole.gameObject.SetActive(true);
+  }
 
-    }
-
-    void HandleGameConsole()
-    {
-        if (Input.GetKeyDown(KeyCode.KeypadMultiply))
-          if (ref_gameConsole.activeSelf)
-            ref_gameConsole.gameObject.SetActive(false);
-          else
-            ref_gameConsole.gameObject.SetActive(true);
-    }
 }

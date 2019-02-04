@@ -5,15 +5,15 @@ using System.Collections;
 public class GranadeBullet : MonoBehaviour, IBullet
 {
 
-    public GameObject pref_explosion;
-    private PhysicsCollisionController collisionControler;
-
-    [HideInInspector]
-    public Vector2 velocity = new Vector2(1,1);
-    public float gravity;
-
-    private Timer timer_explodeTime;
-    public float explodeTime;
+  public GameObject pref_explosion;
+  private PhysicsCollisionController collisionControler;
+  
+  [HideInInspector]
+  public Vector2 velocity = new Vector2(1,1);
+  public float gravity;
+  
+  private Timer timer_explodeTime;
+  public float explodeTime;
 
 	void Awake()
 	{
@@ -60,15 +60,13 @@ public class GranadeBullet : MonoBehaviour, IBullet
     transform.Translate(velocity * Time.deltaTime);
   }
 
-  void OnTriggerEnter2D(Collider2D other)
-  {
+  void OnTriggerEnter2D(Collider2D other) {
     if ((GlobalInformation.instance.mask_enemy & 1 << other.gameObject.layer) == (1 << other.gameObject.layer)) {
       timer_explodeTime.SetCurrentTime(0f);
     }
   }
 
-  private void HandleLifetime()
-  {
+  private void HandleLifetime() {
     timer_explodeTime.Tick(Time.deltaTime);
     if (timer_explodeTime.IsFinished())
       OnEnemyTouch();

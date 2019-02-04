@@ -9,40 +9,23 @@ using System.Collections;
 [RequireComponent(typeof(AnimationManager))]
 public class Entity : MonoBehaviour {
 
-    enum E_TYPE { PLAYER, ENEMY, ITEM }    
+  enum E_TYPE { PLAYER, ENEMY, ITEM }    
 
-    [HideInInspector]
-    public BehaviourController behaviourController;
-    [HideInInspector]
-    public AnimationManager animationManager;
-    [HideInInspector]
-    public GameObject obj_sprite;
-    [HideInInspector]
-    public SpriteRenderer spriteRenderer;
+  [HideInInspector]
+  public BehaviourController behaviourController;
+  [HideInInspector]
+  public AnimationManager animationManager;
+  [HideInInspector]
+  public GameObject obj_sprite;
+  [HideInInspector]
+  public SpriteRenderer spriteRenderer;
 
-    public void Awake()
-	  {
-        behaviourController = GetComponent<BehaviourController>();
-        animationManager = GetComponent<AnimationManager>();  
-        obj_sprite = transform.Find("Sprite").gameObject;
-        spriteRenderer = obj_sprite.GetComponent<SpriteRenderer>();
-    }
-
-    void Start () 
-	{	
-	}
-
-	void Update () 
-	{        
+  public void Awake() {
+    behaviourController = GetComponent<BehaviourController>();
+    animationManager = GetComponent<AnimationManager>();  
+    obj_sprite = transform.Find("Sprite").gameObject;
+    spriteRenderer = obj_sprite.GetComponent<SpriteRenderer>();
   }
-
-
-
-    
-
-
-
-
-
+  
 
 }

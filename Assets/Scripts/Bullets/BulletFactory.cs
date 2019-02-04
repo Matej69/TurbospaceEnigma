@@ -6,8 +6,7 @@ public class BulletFactory {
 
   public enum E_BULLET_TYPE { LINEAR, GRANADE }
 
-  public static void Create(E_BULLET_TYPE type, GameObject prefab, Vector3 pos, Vector2 velocity, int dir)
-  {
+  public static void Create(E_BULLET_TYPE type, GameObject prefab, Vector3 pos, Vector2 velocity, int dir) {
     GameObject bullet = MonoBehaviour.Instantiate(prefab, pos, Quaternion.identity);
     if (type == E_BULLET_TYPE.LINEAR) {
       bullet.GetComponent<LinearBullet>().velocity = velocity;

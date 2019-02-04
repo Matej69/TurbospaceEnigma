@@ -8,23 +8,15 @@ using System.Collections;
 public class Player : Entity
 {
 
-    SlopeController collisionController;
-    //Weapon weapon;
+  SlopeController collisionController;
 
-    void Awake()
-	{
-        base.Awake();
-        //collisionController = GetComponent<PhysicsCollisionController>();
-        //weapon = obj_sprite.transform.FindChild("Weapon").GetComponent<Weapon>();
-    }
+  void Awake() {
+      base.Awake();
+  }
 	
-	void Start () 
-	{
-        animationManager.SetAnimation("Walk");
-        StartCoroutine(animationManager.HandleAnimationUpdate());
-    }
+	void Start () {
+    animationManager.SetAnimation("Walk");
+    StartCoroutine(animationManager.HandleAnimationUpdate());
+  }
 
-	void Update () 
-	{	
-	}
 }

@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour {
 
   private static CameraController instance;
   
-  public GameObject playerObj;
+  public GameObject objToFollow;
   public float followPlayerSpeed;
   
   float shakeMagnitude;
@@ -56,9 +56,15 @@ public class CameraController : MonoBehaviour {
   }
   
   private void HandleCameraPosition() {
-    Vector3 newPos = Vector2.Lerp(transform.position, playerObj.transform.position, followPlayerSpeed * Time.deltaTime);
-    newPos.z = -10;
-    transform.position = newPos;
+    if (objToFollow != null) {
+      Vector3 newPos = Vector2.Lerp(transform.position, objToFollow.transform.position, followPlayerSpeed * Time.deltaTime);
+      newPos.z = -10;
+      transform.position = newPos;
+    }
+  }
+
+  public void SetGameObjectToFollow(GameObject obj) {
+    objToFollow = obj;
   }
 
   

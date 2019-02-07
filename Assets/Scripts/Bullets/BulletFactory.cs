@@ -15,7 +15,6 @@ public class BulletFactory {
     else if (type == E_BULLET_TYPE.GRANADE) {
       bullet.GetComponent<GranadeBullet>().velocity = velocity;
       bullet.GetComponent<GranadeBullet>().SetBulletDirection(dir);
-    }
-
+    } 
   }
 }

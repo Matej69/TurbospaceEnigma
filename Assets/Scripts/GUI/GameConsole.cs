@@ -28,13 +28,14 @@ public class GameConsole : MonoBehaviour {
 
   void RunCommand(string cmd) {
     try {
-  
+    string msgStart = "[" + cmd + "] -> ";
+
       // Switch player weapon [pw 2]
-      if(GetCmdSection(cmd, 1) == "pw") {
+      if (GetCmdSection(cmd, 1) == "pw") {
       int weaponID;
         if (int.TryParse(GetCmdSection(cmd, 2), out weaponID)) {
           GameObject.Find("Player").GetComponent<WeaponSwitching>().SetActiveWeapon((Weapon.E_WEAPON_TYPE)weaponID);
-          PushToCommandHistory("[" + cmd + "] -> Player weapon switched to " + weaponID);
+          PushToCommandHistory(msgStart + "Player weapon switched to " + weaponID);
         }
       }
   
@@ -43,7 +44,20 @@ public class GameConsole : MonoBehaviour {
         float targetZoom, zoomSpeed;
         if (float.TryParse(GetCmdSection(cmd, 2), out targetZoom) && float.TryParse(GetCmdSection(cmd, 3), out zoomSpeed)) {
           Camera.main.GetComponent<CameraController>().SetCameraZoom(targetZoom, zoomSpeed);
-          PushToCommandHistory("[" + cmd + "] -> Camera zooming to size " + targetZoom + " by speed " + zoomSpeed);
+          PushToCommandHistory(msgStart + "Camera zooming to size " + targetZoom + " by speed " + zoomSpeed);
+        }
+      }
+
+      // Change scene [scene 1]
+      else if(GetCmdSection(cmd, 1) == "scene") {
+        int sceneID;
+        if (int.TryParse(GetCmdSection(cmd, 2), out sceneID) ) {
+          if (sceneID < (int)SceneManager.e_sceneID.NUM_OF_SCENES) {
+            SceneManager.ChangeTo((SceneManager.e_sceneID)sceneID);
+            PushToCommandHistory(msgStart + "Scene changed to " + (SceneManager.e_sceneID)sceneID);
+          }
+          else
+            PushToCommandHistory(msgStart + "sceenID= "+ sceneID + " does not exist. Max sceneID is " + (int)(SceneManager.e_sceneID.NUM_OF_SCENES-1));
         }
       }
   

@@ -13,9 +13,7 @@ public class CameraController : MonoBehaviour {
   Timer timer_shakeTime;
   Timer timer_shakeEvery;
   int lastShakeDir = 1;
-
-  private float initialOnPlanetCamZoom = 5;
-  private float initialInSpaceCamZoom = 5;
+  
 
   private Coroutine ref_cameraZoomCorutine;
 
@@ -25,6 +23,7 @@ public class CameraController : MonoBehaviour {
     instance = this;
     timer_shakeTime = new Timer(0.2f);
     timer_shakeEvery = new Timer(0.05f);
+    EventManager.event_sceneChange.AddListener(OnSceneChange);
    }
 
 	void Update () 
@@ -90,6 +89,13 @@ public class CameraController : MonoBehaviour {
     if (ref_cameraZoomCorutine != null)
       StopCoroutine(ref_cameraZoomCorutine);
     ref_cameraZoomCorutine = StartCoroutine(SetCameraZoomCoroutine(targetZoom, zoomSpeed));
+  }
+
+  private void OnSceneChange(SceneManager.e_sceneID sceneID) { 
+    if (sceneID == SceneManager.e_sceneID.IN_SPACE) 
+      objToFollow = GameObject.FindGameObjectWithTag("Spaceship");
+    else
+      objToFollow = GameObject.FindGameObjectWithTag("PlayerOnPlanet");
   }
 
 

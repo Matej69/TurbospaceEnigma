@@ -66,11 +66,14 @@ public class SpaceTravelerBehaviour : MonoBehaviour {
   }
 
   void OnPlanetClicked(Vector2 pos) {
+    if (!gameObject.activeInHierarchy)
+      return;
     if (travelState == e_travelState.NOT_TRAVELING) {
       pointToTravelTo = (travelState == e_travelState.NOT_TRAVELING) ? pos : (Vector2)transform.position;
       travelState = e_travelState.TRAVELING;
-      TravelTowardsTarget();
       EventManager.event_travelingStateChange.Invoke(e_travelState.TRAVELING);
+      TravelTowardsTarget();
+      
     }
   }
 

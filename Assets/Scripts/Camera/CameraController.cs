@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour {
     instance = this;
     timer_shakeTime = new Timer(0.2f);
     timer_shakeEvery = new Timer(0.05f);
-    EventManager.event_sceneChange.AddListener(OnSceneChange);
+    EventManager.event_sceneChanged.AddListener(OnSceneChange);
    }
 
 	void Update () 

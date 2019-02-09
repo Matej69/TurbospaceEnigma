@@ -23,7 +23,6 @@ public class SceneManager : MonoBehaviour {
 
   private void Start()
   {
-    SceneManager.ChangeTo(e_sceneID.ON_PLANET);
   }
 
   public static void ChangeTo(e_sceneID sceneID) {
@@ -36,7 +35,7 @@ public class SceneManager : MonoBehaviour {
         activeScene.sceneObj.SetActive(true);
       }
     // Send event about scene change
-    EventManager.event_sceneChange.Invoke(sceneID);
+    EventManager.event_sceneChanged.Invoke(sceneID);
   }
 
   

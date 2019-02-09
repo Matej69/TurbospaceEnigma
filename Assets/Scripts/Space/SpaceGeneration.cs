@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGeneration : MonoBehaviour {
+public class SpaceGeneration : MonoBehaviour {
 
-  static private MapGeneration ref_mapGeneration;
-  static public MapGeneration GetRefrence() { return ref_mapGeneration; }
+  static private SpaceGeneration ref_mapGeneration;
+  static public SpaceGeneration GetRefrence() { return ref_mapGeneration; }
 
   private void Awake()
   {

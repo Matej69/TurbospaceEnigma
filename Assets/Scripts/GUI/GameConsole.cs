@@ -10,9 +10,13 @@ public class GameConsole : MonoBehaviour {
   InputField input_command;
   Text text_commandHistory;
 
+  public List<string> cmdsToExecuteOnAwake;
+
   void Awake() {
     input_command = transform.Find("commandInput").GetComponent<InputField>();
     text_commandHistory = transform.Find("commandHistoryText").GetComponent<Text>();
+
+    foreach(string cmd in cmdsToExecuteOnAwake){ RunCommand(cmd); }
   }
 
   // Update is called once per frame

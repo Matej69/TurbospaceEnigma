@@ -46,6 +46,7 @@ public class SpaceTravelerBehaviour : MonoBehaviour {
     float rotSpeed = 1;
     float travelSpeed = 1;
     float travelSpeedPercent = 0;
+    // Keep rotating towards planet and move in direction of spacehip local up axis
     while (Vector2.Distance(transform.position, pointToTravelTo) > Planet.radius) {
       unitVecToDestination = (pointToTravelTo - (Vector2)transform.position).normalized;
       targetRotAngle = (pointToTravelTo.x < transform.position.x) ?
@@ -55,7 +56,7 @@ public class SpaceTravelerBehaviour : MonoBehaviour {
       // Rotate
       rotSpeed += 2f * Time.deltaTime;
       transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotSpeed);
-      // Move forward in y direction while it is rotating
+      // Move spaceship forward in y direction (move up)
       travelSpeedPercent += Time.deltaTime;
       travelSpeed = Mathf.Lerp(0, 3.7f, travelSpeedPercent);
       transform.Translate(Vector2.up * travelSpeed * Time.deltaTime);
@@ -63,6 +64,7 @@ public class SpaceTravelerBehaviour : MonoBehaviour {
     }
     travelState = e_travelState.NOT_TRAVELING;
     EventManager.event_travelingStateChange.Invoke(e_travelState.NOT_TRAVELING);
+    SceneManager.ChangeTo(SceneManager.e_sceneID.ON_PLANET);
   }
 
   void OnPlanetClicked(Vector2 pos) {

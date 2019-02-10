@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GameConsole : MonoBehaviour {
+public class GameConsoleGUI : GUI {
 
   InputField input_command;
   Text text_commandHistory;

@@ -15,7 +15,7 @@ public class Planet : MonoBehaviour{
   }
 
   private void OnMouseDown() {
-    EventManager.event_planetClicked.Invoke(transform.position);
+    EventManager.event_planetClicked.Invoke(this);
   }
 
 }

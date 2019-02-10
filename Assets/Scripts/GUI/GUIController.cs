@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class GUIController : MonoBehaviour {
 
-  GameObject ref_gameConsole;
+  List<GUI> guiList = new List<GUI>();
 
-	// Use this for initialization
-	void Awake () {
-    ref_gameConsole = transform.Find("Console").gameObject;
+
+
+  // Use this for initialization
+  void Awake () {
+    guiList = new List<GUI>() {
+      transform.Find("Console").gameObject.GetComponent<GUI>(),
+      transform.Find("LeavePlanet").gameObject.GetComponent<GUI>()
+    };
+    EventManager.event_playerInSpaceshipRange.AddListener(OnPlayerInRangeChanged);
   }
 	
 	// Update is called once per frame
@@ -16,12 +22,32 @@ public class GUIController : MonoBehaviour {
     HandleGameConsole();
   }
 
+
+  void SetGUIState(GUI.GUIType guiType, bool state) {
+    GetGUI(guiType).gameObject.SetActive(state);
+  }
+
+  GUI GetGUI(GUI.GUIType guiType) {
+    foreach (GUI gui in guiList)
+      if (gui.guiType == guiType)
+        return gui;
+    return null;
+  }
+
+
+
   void HandleGameConsole() {
     if (Input.GetKeyDown(KeyCode.KeypadMultiply))
-      if (ref_gameConsole.activeSelf)
-        ref_gameConsole.gameObject.SetActive(false);
+      if (GetGUI(GUI.GUIType.CONSOLE).gameObject.activeSelf)
+        SetGUIState(GUI.GUIType.CONSOLE, false);
       else
-        ref_gameConsole.gameObject.SetActive(true);
+        SetGUIState(GUI.GUIType.CONSOLE, true);
   }
+
+  void OnPlayerInRangeChanged(bool state) {
+    SetGUIState(GUI.GUIType.LEAVE_PLANET_BTN, state);
+  }
+
+
 
 }

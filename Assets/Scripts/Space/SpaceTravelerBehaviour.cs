@@ -8,12 +8,18 @@ public class SpaceTravelerBehaviour : MonoBehaviour {
     e_travelState travelState;
 
   [HideInInspector]
-    public Vector2 pointToTravelTo;
-    float maxTravelSpeed;
-    float timeOfMovementStart;
-    float timeToReachMaxSpeed;
-    float stopMovementTargetRadius;
-    float slownDownMovementRadius;
+  float maxTravelSpeed;
+  float timeOfMovementStart;
+  float timeToReachMaxSpeed;
+  float stopMovementTargetRadius;
+  float slownDownMovementRadius;
+  
+  class TargetPlanetStatus {
+    public Planet targetPlanet = null;
+    public bool planetReached = false;
+  }
+  TargetPlanetStatus targetPlanetStatus = new TargetPlanetStatus();
+
 
     // Use this for initialization 
     void Start () {
@@ -46,10 +52,11 @@ public class SpaceTravelerBehaviour : MonoBehaviour {
     float rotSpeed = 1;
     float travelSpeed = 1;
     float travelSpeedPercent = 0;
+    Vector2 planetPos = targetPlanetStatus.targetPlanet.transform.position;
     // Keep rotating towards planet and move in direction of spacehip local up axis
-    while (Vector2.Distance(transform.position, pointToTravelTo) > Planet.radius) {
-      unitVecToDestination = (pointToTravelTo - (Vector2)transform.position).normalized;
-      targetRotAngle = (pointToTravelTo.x < transform.position.x) ?
+    while (Vector2.Distance(transform.position, planetPos) > Planet.radius) {
+      unitVecToDestination = (planetPos - (Vector2)transform.position).normalized;
+      targetRotAngle = (planetPos.x < transform.position.x) ?
                           Vector2.Angle(Vector2.up, unitVecToDestination) :
                           360 - Vector2.Angle(Vector2.up, unitVecToDestination);
       targetRotation = Quaternion.Euler(new Vector3(0, 0, targetRotAngle));
@@ -63,19 +70,21 @@ public class SpaceTravelerBehaviour : MonoBehaviour {
       yield return null;
     }
     travelState = e_travelState.NOT_TRAVELING;
+    targetPlanetStatus.planetReached = true;
     EventManager.event_travelingStateChange.Invoke(e_travelState.NOT_TRAVELING);
-    SceneManager.ChangeTo(SceneManager.e_sceneID.ON_PLANET);
   }
 
-  void OnPlanetClicked(Vector2 pos) {
-    if (!gameObject.activeInHierarchy)
-      return;
-    if (travelState == e_travelState.NOT_TRAVELING) {
-      pointToTravelTo = (travelState == e_travelState.NOT_TRAVELING) ? pos : (Vector2)transform.position;
+  void OnPlanetClicked(Planet planet) {
+    // If planet is clicked(second time) after spaceship has reached it, change to on planet scene
+    if (planet == targetPlanetStatus.targetPlanet && travelState != e_travelState.TRAVELING && targetPlanetStatus.planetReached) {
+      SceneManager.ChangeTo(SceneManager.e_sceneID.ON_PLANET);
+    }
+    // Set clicked planet as targeted planet and start traveling towards it
+    else if (travelState == e_travelState.NOT_TRAVELING) {
+      targetPlanetStatus.targetPlanet = planet;
       travelState = e_travelState.TRAVELING;
       EventManager.event_travelingStateChange.Invoke(e_travelState.TRAVELING);
       TravelTowardsTarget();
-      
     }
   }
 

@@ -108,8 +108,8 @@ public class CameraController : MonoBehaviour {
     }
     else {
       objToFollow = GameObject.FindGameObjectWithTag("SpaceshipOnPlanet");
-      SetCameraSize(9);
-      StartCameraZoom(6, 0.2f);
+      SetCameraSize(15);
+      StartCameraZoom(6, 0.45f);
     }
   }
 

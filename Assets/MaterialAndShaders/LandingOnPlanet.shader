@@ -1,38 +1,62 @@
-﻿Shader "Camera/LandingOnPlanet"{
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Properties{
-}
+Shader "Shaders 102/Simple Box Blur"
+{
+	Properties
+	{
+		_MainTex("Texture", 2D) = "white" {}
+	}
+		SubShader
+	{
+		// No culling or depth
+		Cull Off ZWrite Off ZTest Always
 
-	SubShader{
-	
-		Pass{
-	
+		Pass
+	{
 		CGPROGRAM
-	
-		#pragma vertex vertexFunc
-		#pragma fragment fragmentFunc
-		#include "UnityCG.cginc"
-	
-		struct v2f {
-			float4 pos : SV_POSITION;
-			half2 uv : TEXCOORD0;
-		};
-	
-		v2f vertexFunc(appdata_base v) {
-			v2f o;
-			o.pos = UnityObjectToClipPos(v.vertex);
-			o.uv = v.texcoord;
-			return o;
-		}
-	
-	
-		fixed4 fragmentFunc(v2f i) : COLOR{
-			return half4(1.0, 0.0, 0.0, 1.0);
-			//return c;
-		}
-	
-	
+#pragma vertex vert
+#pragma fragment frag
+
+#include "UnityCG.cginc"
+
+		struct appdata
+	{
+		float4 vertex : POSITION;
+		float2 uv : TEXCOORD0;
+	};
+
+	struct v2f
+	{
+		float2 uv : TEXCOORD0;
+		float4 vertex : SV_POSITION;
+	};
+
+	v2f vert(appdata v)
+	{
+		v2f o;
+		o.vertex = UnityObjectToClipPos(v.vertex);
+		o.uv = v.uv;
+		return o;
+	}
+
+	sampler2D _MainTex;
+	float4 _MainTex_TexelSize;
+
+	float4 box(sampler2D tex, float2 uv, float4 size)
+	{
+		float4 c = tex2D(tex, uv + float2(-size.x, size.y)) + tex2D(tex, uv + float2(0, size.y)) + tex2D(tex, uv + float2(size.x, size.y)) +
+			tex2D(tex, uv + float2(-size.x, 0)) + tex2D(tex, uv + float2(0, 0)) + tex2D(tex, uv + float2(size.x, 0)) +
+			tex2D(tex, uv + float2(-size.x, -size.y)) + tex2D(tex, uv + float2(0, -size.y)) + tex2D(tex, uv + float2(size.x, -size.y));
+
+		return c / 9;
+	}
+
+	float4 frag(v2f i) : SV_Target
+	{
+		float4 col = box(_MainTex, i.uv, _MainTex_TexelSize);
+		return col;
+	}
 		ENDCG
-		}
+	}
 	}
 }

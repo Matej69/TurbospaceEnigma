@@ -24,9 +24,14 @@ public class CameraController : MonoBehaviour {
     timer_shakeTime = new Timer(0.2f);
     timer_shakeEvery = new Timer(0.05f);
     EventManager.event_sceneChanged.AddListener(OnSceneChange);
-   }
+    EventManager.event_spaceshipLanded.AddListener(OnSpaceshipLanded);
+  }
 
-	void Update () 
+  private void Start()
+  {
+  }
+
+  void Update () 
 	{
     HandleCameraPosition();
     HandleShake();
@@ -67,7 +72,7 @@ public class CameraController : MonoBehaviour {
   }
 
   
-  private IEnumerator SetCameraZoomCoroutine(float targetZoom, float zoomSpeed) {
+  private IEnumerator StartCameraZoomCoroutine(float targetZoom, float zoomSpeed) {
     float startZoom = Camera.main.orthographicSize;
     float currentZoom = startZoom;
     float zoomProgress = 0;
@@ -85,17 +90,31 @@ public class CameraController : MonoBehaviour {
     }
   }
 
-  public void SetCameraZoom(float targetZoom, float zoomSpeed) {
+  public void StartCameraZoom(float targetZoom, float zoomSpeed) {
     if (ref_cameraZoomCorutine != null)
       StopCoroutine(ref_cameraZoomCorutine);
-    ref_cameraZoomCorutine = StartCoroutine(SetCameraZoomCoroutine(targetZoom, zoomSpeed));
+    ref_cameraZoomCorutine = StartCoroutine(StartCameraZoomCoroutine(targetZoom, zoomSpeed));
+  }
+
+  public void SetCameraSize(float camSize) {
+    Camera.main.orthographicSize = camSize;
   }
 
   private void OnSceneChange(SceneManager.e_sceneID sceneID) { 
-    if (sceneID == SceneManager.e_sceneID.IN_SPACE) 
+    if (sceneID == SceneManager.e_sceneID.IN_SPACE) {
       objToFollow = GameObject.FindGameObjectWithTag("Spaceship");
-    else
-      objToFollow = GameObject.FindGameObjectWithTag("PlayerOnPlanet");
+      SetCameraSize(3);
+      StartCameraZoom(6, 0.2f);
+    }
+    else {
+      objToFollow = GameObject.FindGameObjectWithTag("SpaceshipOnPlanet");
+      SetCameraSize(9);
+      StartCameraZoom(6, 0.2f);
+    }
+  }
+
+  private void OnSpaceshipLanded() {
+    objToFollow = GameObject.FindWithTag("PlayerOnPlanet");
   }
 
 

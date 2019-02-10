@@ -47,7 +47,7 @@ public class GameConsole : MonoBehaviour {
       else if(GetCmdSection(cmd, 1) == "cam") {
         float targetZoom, zoomSpeed;
         if (float.TryParse(GetCmdSection(cmd, 2), out targetZoom) && float.TryParse(GetCmdSection(cmd, 3), out zoomSpeed)) {
-          Camera.main.GetComponent<CameraController>().SetCameraZoom(targetZoom, zoomSpeed);
+          Camera.main.GetComponent<CameraController>().StartCameraZoom(targetZoom, zoomSpeed);
           PushToCommandHistory(msgStart + "Camera zooming to size " + targetZoom + " by speed " + zoomSpeed);
         }
       }

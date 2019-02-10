@@ -7,6 +7,7 @@ Properties{
 }
 
 	SubShader{
+
 		Cull Off
 	
 		Blend One OneMinusSrcAlpha

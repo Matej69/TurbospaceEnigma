@@ -17,6 +17,8 @@ public class EventManager : MonoBehaviour {
   public static EventTravelingStateChanged  event_travelingStateChange  = new EventTravelingStateChanged();
   public static EventMouseOnPlanet          event_mouseOnPlanet         = new EventMouseOnPlanet();
   public static EventSceneChange            event_sceneChanged          = new EventSceneChange();
+  public static UnityEvent                  event_spaceshipLanded       = new UnityEvent();
+
 
 
   void Awake () {

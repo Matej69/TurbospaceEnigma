@@ -4,7 +4,10 @@ Shader "Shaders 102/Simple Box Blur"
 {
 	Properties
 	{
-		_MainTex("Texture", 2D) = "white" {}
+		_MainTex("MainTexture", 2D) = "white" {}
+		_SpaceTex("SpaceTexture", 2D) = "white" {}
+		_CutOffTex("CutOffTexture", 2D) = "white" {}
+		_CutOffValue("cutOffValue", Range(0, 1)) = 0
 	}
 		SubShader
 	{
@@ -39,22 +42,31 @@ Shader "Shaders 102/Simple Box Blur"
 		return o;
 	}
 
-	sampler2D _MainTex;
-	float4 _MainTex_TexelSize;
-
 	float4 box(sampler2D tex, float2 uv, float4 size)
 	{
-		float4 c = tex2D(tex, uv + float2(-size.x, size.y)) + tex2D(tex, uv + float2(0, size.y)) + tex2D(tex, uv + float2(size.x, size.y)) +
-			tex2D(tex, uv + float2(-size.x, 0)) + tex2D(tex, uv + float2(0, 0)) + tex2D(tex, uv + float2(size.x, 0)) +
-			tex2D(tex, uv + float2(-size.x, -size.y)) + tex2D(tex, uv + float2(0, -size.y)) + tex2D(tex, uv + float2(size.x, -size.y));
-
-		return c / 9;
+		return tex2D(tex, uv);
 	}
+
+
+
+
+
+	sampler2D _MainTex;
+	sampler2D _CutOffTex;
+	sampler2D _SpaceTex;
+	float4 _MainTex_TexelSize; 
+	float _CutOffValue;
 
 	float4 frag(v2f i) : SV_Target
 	{
-		float4 col = box(_MainTex, i.uv, _MainTex_TexelSize);
-		return col;
+		fixed4 originalPixel = tex2D(_MainTex, i.uv);
+		fixed4 spacePixel = tex2D(_SpaceTex, i.uv);
+		fixed4 cutOffPixel = tex2D(_CutOffTex, i.uv);
+
+		if (_CutOffValue > cutOffPixel.r)
+			return spacePixel;
+		else
+			return originalPixel;
 	}
 		ENDCG
 	}

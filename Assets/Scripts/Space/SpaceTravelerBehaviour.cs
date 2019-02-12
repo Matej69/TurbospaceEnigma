@@ -77,7 +77,7 @@ public class SpaceTravelerBehaviour : MonoBehaviour {
   void OnPlanetClicked(Planet planet) {
     // If planet is clicked(second time) after spaceship has reached it, change to on planet scene
     if (planet == targetPlanetStatus.targetPlanet && travelState != e_travelState.TRAVELING && targetPlanetStatus.planetReached) {
-      SceneManager.ChangeTo(SceneManager.e_sceneID.ON_PLANET);
+      EventManager.event_sceneNeedsToChange.Invoke(SceneManager.e_sceneID.ON_PLANET);
     }
     // Set clicked planet as targeted planet and start traveling towards it
     else if (travelState == e_travelState.NOT_TRAVELING) {

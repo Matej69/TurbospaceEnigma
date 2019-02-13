@@ -14,11 +14,12 @@ public class GUIController : MonoBehaviour {
       transform.Find("Console").gameObject.GetComponent<GUI>(),
       transform.Find("LeavePlanet").gameObject.GetComponent<GUI>()
     };
-    EventManager.event_playerInSpaceshipRange.AddListener(OnPlayerInRangeChanged);
+    EventManager.event_playerOnSurfaceAndInSpaceshipRange.AddListener(OnPlayerInSpaceshipRangeChanged);
+    EventManager.event_startSpaceshipLunchFromPlanet.AddListener(delegate { SetGUIState(GUI.GUIType.LEAVE_PLANET_BTN, false); } );
   }
-	
-	// Update is called once per frame
-	void Update () {
+
+  // Update is called once per frame
+  void Update () {
     HandleGameConsole();
   }
 
@@ -44,9 +45,10 @@ public class GUIController : MonoBehaviour {
         SetGUIState(GUI.GUIType.CONSOLE, true);
   }
 
-  void OnPlayerInRangeChanged(bool state) {
+  void OnPlayerInSpaceshipRangeChanged(bool state) {
     SetGUIState(GUI.GUIType.LEAVE_PLANET_BTN, state);
   }
+  
 
 
 

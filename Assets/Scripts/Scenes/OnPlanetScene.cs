@@ -10,6 +10,8 @@ public class OnPlanetScene : MonoBehaviour {
   Coroutine spaceshipLandingOnPlanet;
   Coroutine playerInSpaceshipRange;
 
+  bool isSpaceshipLeavingPlanet = false;
+  bool didSpaceshipLand = false;
 
   private void Awake() {
     onPlanetSpaceship = transform.Find("Spaceship").gameObject.GetComponent<OnPlanetSpaceship>();
@@ -19,8 +21,11 @@ public class OnPlanetScene : MonoBehaviour {
   private void OnEnable() {
     spaceshipLandingOnPlanet = StartCoroutine(SpaceshipLandingOnPlanet());
     playerInSpaceshipRange = StartCoroutine(PlayerInSpaceshipRange());
+    EventManager.event_startSpaceshipLunchFromPlanet.AddListener(delegate { isSpaceshipLeavingPlanet = true; });
   }
   private void OnDisable() {
+    isSpaceshipLeavingPlanet = false;
+    didSpaceshipLand = false;
     if (spaceshipLandingOnPlanet != null)
       StopCoroutine(spaceshipLandingOnPlanet);
     if (playerInSpaceshipRange != null)
@@ -37,7 +42,7 @@ public class OnPlanetScene : MonoBehaviour {
       onPlanetSpaceship.TravelTowardsPlanetSurface();
       yield return null;
     }
-    
+    didSpaceshipLand = true;
     onPlanetPlayer.transform.SetParent(gameObject.transform);
     onPlanetPlayer.SetActive(true);
     EventManager.event_spaceshipLanded.Invoke();
@@ -49,12 +54,16 @@ public class OnPlanetScene : MonoBehaviour {
     bool isPlayerInRange = false;
     float inRangeRadius = 3f;
     while (true) {
-      isPlayerInRange = Vector2.Distance(onPlanetPlayer.transform.position, onPlanetSpaceship.transform.position) < inRangeRadius;
-      if (isPlayerInRange && !wasPlayerInRangeLastFrame)
-        EventManager.event_playerInSpaceshipRange.Invoke(true);
-      else if (!isPlayerInRange && wasPlayerInRangeLastFrame)
-        EventManager.event_playerInSpaceshipRange.Invoke(false);
-      wasPlayerInRangeLastFrame = isPlayerInRange;
+      if (isSpaceshipLeavingPlanet || !didSpaceshipLand)
+        yield return null;
+      else {
+        isPlayerInRange = Vector2.Distance(onPlanetPlayer.transform.position, onPlanetSpaceship.transform.position) < inRangeRadius;
+        if (isPlayerInRange && !wasPlayerInRangeLastFrame)
+          EventManager.event_playerOnSurfaceAndInSpaceshipRange.Invoke(true);
+        else if (!isPlayerInRange && wasPlayerInRangeLastFrame)
+          EventManager.event_playerOnSurfaceAndInSpaceshipRange.Invoke(false);
+        wasPlayerInRangeLastFrame = isPlayerInRange;
+      }
       yield return null;
     }
   }

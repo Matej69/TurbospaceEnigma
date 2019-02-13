@@ -15,7 +15,8 @@ public class CameraShader : MonoBehaviour {
   }
 
   private void Awake() {
-    EventManager.event_sceneNeedsToChange.AddListener(StartBetweenSceneShader);
+    EventManager.event_planetClickedWithSpaceshipOnIt.AddListener(delegate { StartBetweenSceneShader(SceneManager.e_sceneID.ON_PLANET); } );
+    EventManager.event_startSpaceshipLunchFromPlanet.AddListener(delegate { StartBetweenSceneShader(SceneManager.e_sceneID.IN_SPACE); });
   }
 
 

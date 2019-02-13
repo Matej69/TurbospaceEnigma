@@ -9,7 +9,7 @@ public class LeavePlanetGUI : GUI {
   void Awake() {
     Button btn_leavePlanet = transform.Find("Button").GetComponent<Button>();
     btn_leavePlanet.onClick.AddListener(delegate {
-      EventManager.event_sceneNeedsToChange.Invoke(SceneManager.e_sceneID.IN_SPACE);
+      EventManager.event_startSpaceshipLunchFromPlanet.Invoke();
     });
   }
   
